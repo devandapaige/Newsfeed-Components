@@ -3,6 +3,14 @@
 // You can read about ES6 modules here: https://exploringjs.com/es6/ch_modules.html#sec_basics-of-es6-modules
 const data = [
   {
+    title: "Clementine Gets a Treat",
+    date: "October 6th, 2020",
+    firstParagraph: "She was being a very good cat while her mom was in class.",
+    secondParagraph: "So she got a chicken treat",
+    thirdParagraph:
+      "Further information to come on if she will get a second treat later today.",
+  },
+  {
     title: 'Lambda School Students: "We\'re the best!"',
     date: "Nov 5th, 2018",
     firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando
@@ -90,26 +98,26 @@ const data = [
     {three separate paragraph elements}
     <span class="expandButton">+</span>
   </div> */
-
-const articleMaker = (divParent) => {
+const articleMaker = (data) => {
   const divParent = document.createElement("div");
-  divParent.classList.add("article");
   const title = document.createElement("h2");
   const date = document.createElement("p");
-  date.classList.add("date");
   const p1 = document.createElement("p");
-  p1.classList.add("firstParagraph");
   const p2 = document.createElement("p");
-  p2.classList.add("secondParagraph");
   const p3 = document.createElement("p");
-  p3.classList.add("thirdParagraph");
   const expand = document.createElement("span");
+  divParent.classList.add("article");
+  date.classList.add("date");
+  p1.classList.add("firstParagraph");
+  p2.classList.add("secondParagraph");
+  p3.classList.add("thirdParagraph");
   expand.classList.add("expandButton");
   title.textContent = data.title;
   date.textContent = data.date;
   p1.textContent = data.firstParagraph;
   p2.textContent = data.secondParagraph;
   p3.textContent = data.thirdParagraph;
+  expand.textContent = "+";
   divParent.appendChild(title);
   //expand button needs to be under the title to be visible.
   divParent.appendChild(expand);
@@ -118,8 +126,8 @@ const articleMaker = (divParent) => {
   divParent.appendChild(p2);
   divParent.appendChild(p3);
   //event listener for the extend "+"
-  expand.addEventListener("click", (e) => {
-    //toggle so the
+  expand.addEventListener("click", () => {
+    //toggle so the article opens.
     divParent.classList.toggle("article-open");
   });
   return divParent;
@@ -127,9 +135,18 @@ const articleMaker = (divParent) => {
 //telling the system what an article is.
 const articles = document.querySelector(".articles");
 //explaining that for each of the objects in the data array, the system should activate the articlaMaker above.
-data.forEach((article) => {
-  const a = articleMaker(articles, divParent);
-  articles.appendChild(a);
+data.forEach((articleObj) => {
+  const articleData = articleMaker(articleObj);
+  articles.appendChild(articleData);
+});
+//cannot push additional data or it will not show on the page.
+/*data.push({
+  title: "Clementine Gets a Treat",
+  date: "October 6th, 2020",
+  firstParagraph: "She was being a very good cat while her mom was in class.",
+  secondParagraph: "So she got a chicken treat",
+  thirdParagraph:
+    "Further information to come on if she will get a second treat later today.",
 });
 /* Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton. ✅
   This listener should toggle the class 'article-open' on div.article.
@@ -137,5 +154,5 @@ data.forEach((article) => {
   Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   to create a div.article element and append it to the DOM inside div.articles (see index.html). ✅
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
-  Refresh the page to see the new article.
+  Refresh the page to see the new article. ✅
 */
